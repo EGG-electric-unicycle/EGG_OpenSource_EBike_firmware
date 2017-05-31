@@ -1,5 +1,5 @@
 /*
- * EGG Electric Unicycle firmware
+ * EGG OpenSource EBike firmware
  *
  * Copyright (C) Casainho, 2015, 2106, 2017.
  *
@@ -60,7 +60,7 @@
 #define BATTERY_VOLTAGE__PIN      GPIO_Pin_4
 #define BATTERY_VOLTAGE__PORT     GPIOA
 
-#if (MOTOR_TYPE == MOTOR_TYPE_EUC1) || (MOTOR_TYPE == MOTOR_TYPE_EUC2)
+#if (MOTOR_TYPE == MOTOR_TYPE_EUC1) || (MOTOR_TYPE == MOTOR_TYPE_EUC2) || (MOTOR_TYPE == MOTOR_TYPE_Q85)
   #define HALL_SENSOR_A__PIN        GPIO_Pin_12
   #define HALL_SENSOR_B__PIN        GPIO_Pin_13
   #define HALL_SENSOR_C__PIN        GPIO_Pin_14
@@ -102,6 +102,9 @@
 #define BUZZER__PIN               GPIO_Pin_8
 #define BUZZER__PORT              GPIOA
 
+#define SAFE_SWITCH__PIN          GPIO_Pin_0
+#define SAFE_SWITCH__PORT         GPIOA
+
 #define LED_1_BATTERY_INDICATOR__PIN        GPIO_Pin_15
 #define LED_1_BATTERY_INDICATOR__PORT       GPIOB
 #define LED_2_BATTERY_INDICATOR__PIN        GPIO_Pin_11
@@ -112,5 +115,6 @@
 #define LED_4_BATTERY_INDICATOR__PORT       GPIOB
 
 void gpio_init (void);
+unsigned int safe_switch_get_state (void);
 
 #endif /* GPIO_H_ */

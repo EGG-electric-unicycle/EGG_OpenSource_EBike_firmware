@@ -1,25 +1,14 @@
 /*
- * EGG Electric Unicycle firmware
+ * BMSBattery S series motor controllers firmware
  *
- * Copyright (C) Casainho, 2015, 2106, 2017.
+ * Copyright (C) Casainho, 2017.
  *
  * Released under the GPL License, Version 3
  */
 
-#include "stm32f10x_rcc.h"
-#include "stm32f10x_gpio.h"
-#include "stm32f10x_tim.h"
 #include "hall_sensors.h"
 #include "main.h"
 #include "gpio.h"
-#include "stdio.h"
-
-volatile unsigned int hall_sensors_time = 0;
-
-//unsigned int get_hall_sensors_us (void)
-//{
-//  return hall_sensors_time * 10; // multiply by 10 to get in us
-//}
 
 void hall_sensor_init (void)
 {

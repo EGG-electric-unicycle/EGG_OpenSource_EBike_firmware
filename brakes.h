@@ -6,11 +6,8 @@
  * Released under the GPL License, Version 3
  */
 
-#ifndef _BUZZER_H
-#define _BUZZER_H
+#ifndef _BRAKES_H_
+#define _BRAKES_H_
 
-void buzzer_init (void);
-void buzzer_on (void);
-void buzzer_off (void);
 
-#endif /* _BUZZER_H_ */
+#endif

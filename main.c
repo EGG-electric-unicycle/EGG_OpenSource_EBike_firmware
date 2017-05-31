@@ -1,5 +1,5 @@
 /*
- * EGG Electric Unicycle firmware
+ * EGG OpenSource EBike firmware
  *
  * Copyright (C) Casainho, 2015, 2106, 2017.
  *
@@ -10,7 +10,6 @@
 #include "gpio.h"
 #include "main.h"
 #include "stdio.h"
-#include "leds.h"
 #include "filter.h"
 #include "math.h"
 #include "qfplib-m3.h"
@@ -21,6 +20,7 @@
 #include "usart.h"
 #include "IMU/imu.h"
 #include "balance_controller.h"
+#include "brakes.h"
 #include "motor_foc.h"
 
 static volatile unsigned int _ms;
@@ -72,9 +72,7 @@ int main(void)
 
   // don't start until the potentiometer is on the middle value --> PWM ~= 0
   unsigned int duty_cycle_value;
-  while ((duty_cycle_value = adc_get_potentiometer_value()) < 1720 ||
-      duty_cycle_value > 1880) ;
-//  while ((duty_cycle_value = adc_get_potentiometer_value()) < 500) ;
+  while (safe_switch_get_state()) ;
 
   set_pwm_duty_cycle (0);
   enable_phase_a ();

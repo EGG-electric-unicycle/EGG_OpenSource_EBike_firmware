@@ -1,5 +1,5 @@
 /*
- * EGG Electric Unicycle firmware
+ * EGG OpenSource EBike firmware
  *
  * Copyright (C) Casainho, 2015, 2106, 2017.
  *
@@ -57,16 +57,18 @@
 
 #define PWM_CYCLES_COUNTER_MAX	((46000*2) - 1) // estimated as 1 rotation in about 4.6 seconds for the MicroWorks 500W 30km/h (44 magnets)
 //#define K_POSITION_CORRECTION_VALUE (0.025 / 1000.0)
-#define K_POSITION_CORRECTION_VALUE (0.05 / 1000.0)
+#define K_POSITION_CORRECTION_VALUE (0.005 / 1000.0)
 #define D_POSITION_CORRECTION_VALUE (1 / 1000.0)
 #define K_IQ_CURRENT (2)
 
 #define MOTOR_TYPE_EUC1 			0
 #define MOTOR_TYPE_EUC2 			1
 #define MOTOR_TYPE_MICROWORKS_500W_30KMH 	2 // works well only rotating to left
-#define MOTOR_TYPE MOTOR_TYPE_EUC2
+#define MOTOR_TYPE_Q85			 	3
+
+#define MOTOR_TYPE MOTOR_TYPE_Q85
 #define MOTOR_OVER_CURRENT			25.0 * 1000.0 // 25 Amps
-#define MOTOR_MAX_CURRENT			4.0 * 1000.0 // motor max current (mA)
+#define MOTOR_MAX_CURRENT			25.0 * 1000.0 // motor max current (mA)
 #define MOTOR_MAX_CURRENT_STEP			4 // step value for incrementing/decrementing
 
 
@@ -78,6 +80,9 @@
 #elif MOTOR_TYPE == MOTOR_TYPE_MICROWORKS_500W_30KMH
   #define MOTOR_ROTOR_DELTA_PHASE_ANGLE_RIGHT 34
   #define MOTOR_ROTOR_DELTA_PHASE_ANGLE_LEFT 34
+#elif MOTOR_TYPE == MOTOR_TYPE_Q85
+  #define MOTOR_ROTOR_DELTA_PHASE_ANGLE_RIGHT 	60
+  #define MOTOR_ROTOR_DELTA_PHASE_ANGLE_LEFT 	0
 #endif
 
 
@@ -87,7 +92,7 @@
 #define MOTOR_GAMA	100000 // 60 / L as noted on VESC mcconf_default.h
 #define MOTOR_PWM_DT	0.0001
 
-#define MOTOR_MIN_DUTYCYCLE 5
+#define MOTOR_MIN_DUTYCYCLE 0
 
 #define MOTOR_MAX_SPEED 	20000 // meter per hour
 //#define MOTOR_MIN_SPEED 	5000 // meter per hour -- walking speed is 5km/h

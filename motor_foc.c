@@ -1,5 +1,5 @@
 /*
- * EGG Electric Unicycle firmware
+ * EGG OpenSource EBike firmware
  *
  * Copyright (C) Casainho, 2015, 2106, 2017.
  *
@@ -98,6 +98,9 @@ void FOC_slow_loop (void)
   adc_phase_b_current = adc_phase_c_current;
   adc_phase_c_current = adc_phase_a_current;
   adc_phase_a_current = -adc_phase_b_current - adc_phase_c_current;
+#elif (MOTOR_TYPE == MOTOR_TYPE_EUC2) || (MOTOR_TYPE == MOTOR_TYPE_Q85)
+  adc_phase_b_current = adc_phase_a_current;
+  adc_phase_a_current = -adc_phase_b_current - adc_phase_c_current;
 #endif
 
   // calc ia and ib in Amps
@@ -163,20 +166,20 @@ void FOC_slow_loop (void)
   // I
   correction_value = qfp_fsub(correction_value, qfp_fmul(K_POSITION_CORRECTION_VALUE, id));
 
-  // D
-  static float id_old = 0;
-  float delta = qfp_fsub(id, id_old);
-  id_old = id;
-  correction_value = qfp_fsub(correction_value, qfp_fmul(D_POSITION_CORRECTION_VALUE, delta));
+//  // D
+//  static float id_old = 0;
+//  float delta = qfp_fsub(id, id_old);
+//  id_old = id;
+//  correction_value = qfp_fadd(correction_value, qfp_fmul(D_POSITION_CORRECTION_VALUE, delta));
 
 
   if ((duty_cycle < 5 && duty_cycle > -5) || motor_speed_erps < 80) // avoid PI controller windup
   { // motor_speed_erps < 80 seems a good value to avoid motor stalling at start up, very low speed
     correction_value = 0.0;
   }
-  if (correction_value > 30.0) { correction_value = 30.0; }
-  if (correction_value < -30.0) { correction_value = -30.0; }
-  position_correction_value = (int) correction_value;
+//  if (correction_value > 60.0) { correction_value = 60.0; }
+//  if (correction_value < -60.0) { correction_value = -60.0; }
+//  position_correction_value = (int) correction_value;
   // ------------------------------------------------------------------------
 
   // Max current controller
@@ -290,7 +293,7 @@ void FOC_fast_loop (void)
    * considering: a + b + c = 0 ; a + c = -b ; b = -(a + c) ; b = -a -c */
 #if MOTOR_TYPE == MOTOR_TYPE_EUC1
   _adc_phase_b_current = -_adc_phase_a_current - _adc_phase_c_current;
-#elif MOTOR_TYPE == MOTOR_TYPE_EUC2
+#elif (MOTOR_TYPE == MOTOR_TYPE_EUC2) || (MOTOR_TYPE == MOTOR_TYPE_Q85)
   // change currents as for this motor, the phases are: BAC and not ABC
   _adc_phase_b_current = _adc_phase_a_current;
   _adc_phase_a_current = -_adc_phase_b_current - _adc_phase_c_current;

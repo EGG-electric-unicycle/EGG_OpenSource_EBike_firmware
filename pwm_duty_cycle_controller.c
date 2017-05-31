@@ -1,5 +1,5 @@
 /*
- * EGG Electric Unicycle firmware
+ * EGG OpenSource EBike firmware
  *
  * Copyright (C) Casainho, 2015, 2106, 2017.
  *
@@ -477,7 +477,7 @@ void apply_duty_cycle (int duty_cycle_value)
   set_pwm_phase_a (value_a);
   set_pwm_phase_b (value_b);
   set_pwm_phase_c (value_c);
-#elif MOTOR_TYPE == MOTOR_TYPE_EUC2
+#elif (MOTOR_TYPE == MOTOR_TYPE_EUC2) || (MOTOR_TYPE == MOTOR_TYPE_Q85)
   set_pwm_phase_a (value_b);
   set_pwm_phase_b (value_a);
   set_pwm_phase_c (value_c);

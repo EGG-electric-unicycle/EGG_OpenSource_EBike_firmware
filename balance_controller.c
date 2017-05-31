@@ -1,5 +1,5 @@
 /*
- * EGG Electric Unicycle firmware
+ * EGG OpenSource EBike firmware
  *
  * Copyright (C) Casainho, 2015, 2106, 2017.
  *
@@ -34,7 +34,7 @@ void balance_controller(void)
   float dt;
   float temp;
 
-  angle_error = IMU_get_angle_error ();
+//  angle_error = IMU_get_angle_error ();
 
   /////////////////////////////
 
@@ -96,19 +96,15 @@ void balance_controller(void)
 #define PWM_INPUT PWM_INPUT_POTENTIOMETER
 
 #if PWM_INPUT == PWM_INPUT_POTENTIOMETER
-  unsigned int duty_cycle_value;
-  int value;
-  static unsigned int moving_average = 4095 / 2;
-  unsigned int alpha = 20;
+
+  float duty_cycle_value;
   duty_cycle_value = adc_get_potentiometer_value ();
-  duty_cycle_value = ema_filter_uint32 (&duty_cycle_value, &moving_average, &alpha);
-  value = ((int) duty_cycle_value) - 2048;
-  value = value * 1000;
-  value = value / 2048;
-  duty_cycle_f = (float) value;
+  duty_cycle_value -= 1076;
+  duty_cycle_value *= 0.483;
+
 #elif PWM_INPUT == PWM_INPUT_FIXED_VALUE
   duty_cycle_f = -40.0;
 #endif
 
-  set_pwm_duty_cycle ((int) duty_cycle_f);
+  set_pwm_duty_cycle ((int) duty_cycle_value);
 }
